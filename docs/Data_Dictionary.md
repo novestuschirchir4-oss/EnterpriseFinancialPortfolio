@@ -1,5 +1,5 @@
 # Enterprise Financial Portfolio — Data Dictionary
-# Author  : Phil Kibet | Biostatistician & Financial Data Analyst
+# Author  : Novestus Chirchir
 # Source  : SEC EDGAR · NSE · LSE · NYSE · NASDAQ · FRED · World Bank · IMF
 # Updated : June 2026
 # ============================================================================
