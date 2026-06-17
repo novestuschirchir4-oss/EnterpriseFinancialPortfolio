@@ -6,14 +6,7 @@
 [![DAX](https://img.shields.io/badge/DAX-185FA5?style=for-the-badge&logo=microsoft&logoColor=white)](https://docs.microsoft.com/dax)
 [![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://microsoft.com/excel)
 
----
 
-> **A world-class financial analytics platform equivalent to dashboards used at Goldman Sachs,
-> JPMorgan, BlackRock, McKinsey, and Fortune 500 finance departments.**
-> Built to demonstrate senior-level competency in Power BI, DAX, SQL data warehousing,
-> financial analysis, risk analytics, and executive reporting.
-
----
 
 ## Portfolio Overview
 
@@ -42,6 +35,7 @@ The rolling 12-month revenue uses DATESINPERIOD. YoY growth uses SAMEPERIODLASTY
 **Key Metrics:** Total Revenue · Gross Profit · EBITDA · Net Income · Gross Margin % · EBITDA Margin % · Net Margin % · ROE · ROA · ROIC
 
 **Visuals:** Revenue trend line · Revenue by sector column chart · Gross profit by company bar chart · EBITDA trend · Revenue by region donut
+<img width="1346" height="773" alt="image" src="https://github.com/user-attachments/assets/5877945a-9b9a-40f5-9afc-3820b030f177" />
 
 ---
 
@@ -53,6 +47,7 @@ Ten-year financial statement explorer. The DuPont decomposition — Net Margin �
 **Key Metrics:** Revenue · Gross Profit · EBIT · Net Income · Total Debt · Total Equity · Cash · Debt-to-Equity · Current Ratio · Quick Ratio
 
 **Visuals:** Revenue vs COGS by year · EBITDA by company · Net income trend · Debt by company · Assets by sector donut
+<img width="1341" height="759" alt="image" src="https://github.com/user-attachments/assets/8bd7212f-9564-425a-a7c0-6be979fc0216" />
 
 ---
 
@@ -65,6 +60,7 @@ Bloomberg-style market data terminal. MA20, MA50, MA200 calculated with DATESINP
 **Key Metrics:** Latest Price · Total Market Cap · Total Volume · 52W High · 52W Low · Avg Daily Return · 30D Volatility %
 
 **Visuals:** Price trend with moving averages · Market cap by sector · Volume area chart · Return by sector · Market cap by exchange donut
+<img width="1335" height="758" alt="image" src="https://github.com/user-attachments/assets/7b5b7063-2a2e-4164-9e9a-9595e8aefcfd" />
 
 ---
 
@@ -76,6 +72,7 @@ Full CFA-compliant risk analytics. Sharpe Ratio = (Return − Rf) / σ. Sortino 
 **Key Metrics:** Total Portfolio Value · Avg Daily Return · Avg Beta · Avg Std Dev · Benchmark Return · Sharpe Ratio · Sortino Ratio · Information Ratio · Alpha
 
 **Visuals:** Portfolio return trend · Sector allocation donut · Portfolio value area · Beta by sector · Return by sector bar
+<img width="1329" height="758" alt="image" src="https://github.com/user-attachments/assets/b8b1b597-9941-4e05-b31b-e8a7c7405360" />
 
 ---
 
@@ -88,6 +85,7 @@ Risk tier classification: Green (<1% PD) · Amber (<5%) · Red (<15%) · Critica
 **Key Metrics:** Total EAD · Avg PD · Avg LGD · Collateral Value · Expected Loss · NPL Ratio · Coverage Ratio · Unexpected Loss
 
 **Visuals:** EAD by rating bar · Avg PD by sector · Exposure by sector donut · Collateral by rating · EAD by tenor · Exposure by tenor donut
+<img width="1332" height="766" alt="image" src="https://github.com/user-attachments/assets/df8961e6-80e0-41e7-8d81-5b3df634ce56" />
 
 ---
 
@@ -100,6 +98,7 @@ Benford deviation · 3-sigma amount threshold · Duplicate payment flag · Round
 **Key Metrics:** Total Transactions · Total Amount · Avg Fraud Score · Flagged Transaction Count · Off-Hours % · Benford Deviation Index
 
 **Visuals:** Amount by flag reason · Fraud score by reason · Transaction trend · Amount by hour of day · Amount mix donut
+<img width="1342" height="761" alt="image" src="https://github.com/user-attachments/assets/996ae7f7-3ff4-4c2f-bf0f-9fd32e073490" />
 
 ---
 
@@ -111,6 +110,7 @@ Full budget-actual-forecast triangle. Variance Status uses SWITCH(TRUE()) for dy
 **Key Metrics:** Budget · Actual · Forecast · Variance $ · Variance % · Forecast Accuracy % · Budget Attainment % · Full Year Forecast
 
 **Visuals:** Budget vs actual by department · Actual by cost centre · Budget trend · Actual vs forecast trend · Spend by department donut
+<img width="1331" height="738" alt="image" src="https://github.com/user-attachments/assets/2eeb67e5-d6da-4d7d-ba94-f804f8c916f3" />
 
 ---
 
@@ -123,6 +123,7 @@ NSFR = ASF / RSF ≥ 100%. FX exposure net long/short by currency.
 **Key Metrics:** Total Cash · FX Long · FX Short · HQLA · Net Cash Outflows 30D · LCR % · NSFR % · LCR Status
 
 **Visuals:** Cash balance trend · FX exposure by currency · HQLA area trend · Cash by currency · FX mix donut
+<img width="947" height="530" alt="image" src="https://github.com/user-attachments/assets/6395f1e0-6ca9-4245-b399-7bdaf3bcee82" />
 
 ---
 
@@ -136,6 +137,7 @@ Carbon intensity YoY uses SAMEPERIODLASTYEAR.
 **Key Metrics:** Avg E Score · Avg S Score · Avg G Score · ESG Composite Score · ESG Rating Band · Avg Carbon Intensity · Carbon YoY Change % · Board Diversity %
 
 **Visuals:** E score by company · S score by company · Carbon intensity by company · G score by company · ESG by sector donut
+<img width="1339" height="734" alt="image" src="https://github.com/user-attachments/assets/5c88aae6-475f-422c-ac50-7809d81e24dd" />
 
 ---
 
@@ -148,6 +150,7 @@ Real Policy Rate = Nominal Rate − Inflation (Fisher equation proxy).
 **Key Metrics:** Avg GDP Growth · Avg Inflation · Avg Policy Rate · Real Policy Rate · Avg Unemployment · Avg USD Index · Avg VIX
 
 **Visuals:** GDP growth trend · Inflation by country · Policy rate trend area · Unemployment by country · VIX by country
+<img width="1343" height="758" alt="image" src="https://github.com/user-attachments/assets/514d143c-dded-4f6e-926d-c08347498693" />
 
 ---
 
@@ -160,6 +163,7 @@ Equity Multiplier feeds the DuPont ROE chain. Working Capital = Current Assets �
 **Key Metrics:** Total Assets · Total Equity · Total Debt · Cash · Current Assets · Current Liabilities · Working Capital · Debt-to-Equity · Net Debt to EBITDA
 
 **Visuals:** Total assets trend · Debt by company · Equity by company · Cash trend area · Assets by company donut
+<img width="1331" height="753" alt="image" src="https://github.com/user-attachments/assets/9b274b92-1dc6-4897-b43c-70d498900c5c" />
 
 ---
 
@@ -173,6 +177,7 @@ Three-row layout: Revenue & Portfolio | Credit & Treasury | P&L & FP&A & ESG.
 **Key Metrics:** All 9 fact table KPIs on a single page
 
 **Visuals:** 3 × 3 grid of the most important chart from each analytical domain with 7 KPI cards at the top
+<img width="1333" height="760" alt="image" src="https://github.com/user-attachments/assets/a872f557-3632-4073-8d68-579845260b7f" />
 
 ---
 
@@ -185,8 +190,8 @@ EnterpriseFinancialPortfolio/
 │
 ├── dashboards/
 │   ├── EnterpriseFinancialPortfolio.pbix  ← Main portfolio (12 pages, 179 visuals)
-│   ├── EnterpriseFinancialPortfolio_Template.pbit  ← Portable template version
-│   └── Nairobi_Womens_Hospital_Dashboard.pbix      ← Bonus healthcare dashboard
+│   └── EnterpriseFinancialPortfolio.pdf  
+│   
 │
 ├── data/
 │   └── EnterpriseFinancialPortfolio_Data.xlsx ← 14 tables, 45,581 rows
@@ -212,19 +217,17 @@ EnterpriseFinancialPortfolio/
 ├── dax/
 │   └── DAX_Measures_Library.dax  ← All 98 DAX measures with documentation
 │
-├── docs/
-│   ├── Data_Dictionary.md        ← Full data dictionary for all 14 tables
-│   └── Interview_Talking_Points.md ← Dashboard-by-dashboard interview guide
-│
-└── screenshots/
-    └── (add your dashboard screenshots here for LinkedIn and GitHub preview)
+└── docs/
+    ├── Data_Dictionary.md        ← Full data dictionary for all 14 tables
+    └── Interview_Talking_Points.md ← Dashboard-by-dashboard interview guide
+
 ```
 
 ---
 
 ## Data Sources
 
-All data originates from official public sources. No Kaggle datasets used.
+All data originates from official public sources. 
 
 | Domain | Source | URL |
 |---|---|---|
@@ -402,14 +405,7 @@ psql -U postgres -d financial_dw -f sql/02_analytics_queries.sql
 
 ## Author
 
-**Philip Kibet**
-Biostatistician & Data Manager | Financial Data Analyst
-Nairobi, Kenya
-
-- GitHub: [@Apollop24](https://github.com/Apollop24)
-- Specialisations: Biostatistics · Financial Analytics · SQL · Power BI · Python · R · SPSS · SAS
-- Available for: Freelance data analytics, biostatistics consulting, financial reporting projects
-
+**Novestus Chirchir**
 ---
 
 ## Licence
