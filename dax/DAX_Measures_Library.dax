@@ -1,0 +1,565 @@
+# Enterprise Financial Portfolio — Complete DAX Measures Library
+# Power BI · DAX · Author: Phil Kibet | Biostatistician & Financial Data Analyst
+# 98 Measures across 9 categories
+# ============================================================================
+
+# ── TABLE: FactFinancials ────────────────────────────────────────────────────
+
+## PROFITABILITY MEASURES
+
+Total Revenue =
+    CALCULATE(
+        SUM(FactFinancials[revenue]),
+        ALLSELECTED(DimDate),
+        ALLSELECTED(DimCompany)
+    )
+
+Gross Profit =
+    [Total Revenue] - SUM(FactFinancials[cogs])
+
+Gross Margin % =
+    DIVIDE([Gross Profit], [Total Revenue], 0)
+
+EBITDA =
+    [Gross Profit]
+    - SUM(FactFinancials[sga])
+    - SUM(FactFinancials[rd_expense])
+
+EBITDA Margin % =
+    DIVIDE([EBITDA], [Total Revenue], 0)
+
+EBIT =
+    [EBITDA] - SUM(FactFinancials[da])
+
+EBIT Margin % =
+    DIVIDE([EBIT], [Total Revenue], 0)
+
+Net Income =
+    ( [EBIT] - SUM(FactFinancials[interest_expense]) )
+    * (1 - [Effective Tax Rate])
+
+Net Margin % =
+    DIVIDE([Net Income], [Total Revenue], 0)
+
+Effective Tax Rate = 0.21
+
+FCF =
+    [Net Income] * 0.85
+
+FCF Conversion % =
+    DIVIDE([FCF], [Net Income], 0)
+
+EV (12x EBITDA) =
+    [EBITDA] * 12 * 12
+
+
+## TIME INTELLIGENCE MEASURES
+
+Revenue YoY % =
+    VAR PY =
+        CALCULATE(
+            [Total Revenue],
+            SAMEPERIODLASTYEAR(DimDate[Date])
+        )
+    RETURN
+        DIVIDE([Total Revenue] - PY, PY, 0)
+
+Revenue YTD =
+    TOTALYTD([Total Revenue], DimDate[Date], "12/31")
+
+Revenue QTD =
+    TOTALQTD([Total Revenue], DimDate[Date])
+
+Revenue MTD =
+    TOTALMTD([Total Revenue], DimDate[Date])
+
+Revenue QoQ % =
+    VAR PQ =
+        CALCULATE(
+            [Total Revenue],
+            PREVIOUSQUARTER(DimDate[Date])
+        )
+    RETURN
+        DIVIDE([Total Revenue] - PQ, PQ, 0)
+
+Rolling 12M Revenue =
+    CALCULATE(
+        [Total Revenue],
+        DATESINPERIOD(
+            DimDate[Date],
+            LASTDATE(DimDate[Date]),
+            -12, MONTH
+        )
+    )
+
+Revenue CAGR =
+    VAR StartRev =
+        CALCULATE(
+            [Total Revenue],
+            FILTER(ALL(DimDate), DimDate[FiscalYear] = MIN(DimDate[FiscalYear]))
+        )
+    VAR EndRev =
+        CALCULATE(
+            [Total Revenue],
+            FILTER(ALL(DimDate), DimDate[FiscalYear] = MAX(DimDate[FiscalYear]))
+        )
+    VAR Years =
+        MAX(DimDate[FiscalYear]) - MIN(DimDate[FiscalYear])
+    RETURN
+        DIVIDE(EndRev, StartRev, 0) ^ (1 / Years) - 1
+
+PY Revenue =
+    CALCULATE(
+        [Total Revenue],
+        SAMEPERIODLASTYEAR(DimDate[Date])
+    )
+
+Revenue vs PY =
+    [Total Revenue] - [PY Revenue]
+
+
+## RETURN RATIOS
+
+ROE % =
+    DIVIDE(
+        [Net Income] * 12,
+        AVERAGE(FactBalanceSheet[total_equity]),
+        0
+    )
+
+ROA % =
+    DIVIDE(
+        [Net Income] * 12,
+        AVERAGE(FactBalanceSheet[total_assets]),
+        0
+    )
+
+ROIC % =
+    DIVIDE(
+        [Net Income] * 12,
+        SUM(FactBalanceSheet[total_equity]) + SUM(FactBalanceSheet[total_debt]),
+        0
+    )
+
+
+## DYNAMIC TITLE MEASURE
+
+Dynamic Page Title =
+    VAR SelectedYear =
+        SELECTEDVALUE(DimDate[FiscalYear], "All Years")
+    VAR SelectedSector =
+        SELECTEDVALUE(DimCompany[sector], "All Sectors")
+    RETURN
+        "Financial Performance | " & SelectedYear & " | " & SelectedSector
+
+
+# ── TABLE: FactBalanceSheet ──────────────────────────────────────────────────
+
+Current Ratio =
+    DIVIDE(
+        SUM(FactBalanceSheet[current_assets]),
+        SUM(FactBalanceSheet[current_liabilities]),
+        0
+    )
+
+Quick Ratio =
+    DIVIDE(
+        SUM(FactBalanceSheet[current_assets]) - SUM(FactBalanceSheet[inventory]),
+        SUM(FactBalanceSheet[current_liabilities]),
+        0
+    )
+
+Cash Ratio =
+    DIVIDE(
+        SUM(FactBalanceSheet[cash]),
+        SUM(FactBalanceSheet[current_liabilities]),
+        0
+    )
+
+Net Debt =
+    SUM(FactBalanceSheet[total_debt]) - SUM(FactBalanceSheet[cash])
+
+Debt to Equity =
+    DIVIDE(
+        SUM(FactBalanceSheet[total_debt]),
+        SUM(FactBalanceSheet[total_equity]),
+        0
+    )
+
+Debt Ratio =
+    DIVIDE(
+        SUM(FactBalanceSheet[total_debt]),
+        SUM(FactBalanceSheet[total_assets]),
+        0
+    )
+
+Net Debt to EBITDA =
+    DIVIDE([Net Debt], [EBITDA] * 12, 0)
+
+Working Capital =
+    SUM(FactBalanceSheet[current_assets])
+    - SUM(FactBalanceSheet[current_liabilities])
+
+Asset Turnover =
+    DIVIDE([Total Revenue] * 12, AVERAGE(FactBalanceSheet[total_assets]), 0)
+
+Inventory Turnover =
+    DIVIDE([Total Revenue] * 12, AVERAGE(FactBalanceSheet[inventory]), 0)
+
+Receivables Turnover =
+    DIVIDE([Total Revenue] * 12, AVERAGE(FactBalanceSheet[receivables]), 0)
+
+Days Sales Outstanding =
+    DIVIDE(
+        AVERAGE(FactBalanceSheet[receivables]),
+        [Total Revenue] * 12 / 365,
+        0
+    )
+
+Days Payable Outstanding =
+    DIVIDE(
+        AVERAGE(FactBalanceSheet[payables]),
+        SUM(FactFinancials[cogs]) * 12 / 365,
+        0
+    )
+
+Days Inventory Outstanding =
+    DIVIDE(
+        AVERAGE(FactBalanceSheet[inventory]),
+        SUM(FactFinancials[cogs]) * 12 / 365,
+        0
+    )
+
+Cash Conversion Cycle =
+    [Days Inventory Outstanding]
+    + [Days Sales Outstanding]
+    - [Days Payable Outstanding]
+
+Equity Multiplier =
+    DIVIDE(
+        AVERAGE(FactBalanceSheet[total_assets]),
+        AVERAGE(FactBalanceSheet[total_equity]),
+        0
+    )
+
+Interest Coverage =
+    DIVIDE([EBIT], SUM(FactFinancials[interest_expense]), 0)
+
+Tangible Book Value =
+    SUM(FactBalanceSheet[total_equity])
+    - SUM(FactBalanceSheet[intangibles])
+
+
+# ── TABLE: FactMarketPrices ──────────────────────────────────────────────────
+
+Latest Price =
+    CALCULATE(
+        MAX(FactMarketPrices[close_price]),
+        LASTDATE(DimDate[Date])
+    )
+
+MA 20 =
+    CALCULATE(
+        AVERAGE(FactMarketPrices[close_price]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -20, DAY)
+    )
+
+MA 50 =
+    CALCULATE(
+        AVERAGE(FactMarketPrices[close_price]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -50, DAY)
+    )
+
+MA 200 =
+    CALCULATE(
+        AVERAGE(FactMarketPrices[close_price]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -200, DAY)
+    )
+
+30D Volatility % =
+    CALCULATE(
+        STDEV.P(FactMarketPrices[daily_return]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -30, DAY)
+    ) * SQRT(252) * 100
+
+Total Market Cap =
+    SUM(FactMarketPrices[market_cap])
+
+52W High =
+    CALCULATE(
+        MAX(FactMarketPrices[high_price]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -365, DAY)
+    )
+
+52W Low =
+    CALCULATE(
+        MIN(FactMarketPrices[low_price]),
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -365, DAY)
+    )
+
+Price to 52W High % =
+    DIVIDE([Latest Price], [52W High], 0)
+
+Avg Daily Volume =
+    AVERAGEX(
+        VALUES(DimDate[Date]),
+        SUM(FactMarketPrices[volume])
+    )
+
+
+# ── TABLE: FactPortfolio ─────────────────────────────────────────────────────
+
+Portfolio Return =
+    SUMX(
+        FactPortfolio,
+        FactPortfolio[weight] * FactPortfolio[daily_return]
+    )
+
+Benchmark Return =
+    AVERAGE(FactPortfolio[benchmark_return])
+
+Active Return =
+    [Portfolio Return] - [Benchmark Return]
+
+Beta Weighted =
+    SUMX(
+        FactPortfolio,
+        FactPortfolio[weight] * FactPortfolio[beta]
+    )
+
+Alpha =
+    [Portfolio Return]
+    - (
+        [Beta Weighted] * [Benchmark Return]
+        + (1 - [Beta Weighted]) * AVERAGE(FactPortfolio[risk_free_rate])
+    )
+
+Sharpe Ratio =
+    DIVIDE(
+        [Portfolio Return] - AVERAGE(FactPortfolio[risk_free_rate]),
+        AVERAGE(FactPortfolio[std_dev]),
+        0
+    )
+
+Sortino Ratio =
+    VAR DownsideDev =
+        CALCULATE(
+            STDEV.P(FactPortfolio[daily_return]),
+            FactPortfolio[daily_return] < AVERAGE(FactPortfolio[risk_free_rate])
+        )
+    RETURN
+        DIVIDE(
+            [Portfolio Return] - AVERAGE(FactPortfolio[risk_free_rate]),
+            DownsideDev,
+            0
+        )
+
+Information Ratio =
+    DIVIDE(
+        [Active Return],
+        STDEV.P(FactPortfolio[daily_return]),
+        0
+    )
+
+Tracking Error =
+    STDEV.P(
+        FactPortfolio[daily_return] - FactPortfolio[benchmark_return]
+    )
+
+Total Portfolio Value =
+    SUM(FactPortfolio[market_value])
+
+
+# ── TABLE: FactCreditRisk ────────────────────────────────────────────────────
+
+Expected Loss =
+    SUMX(
+        FactCreditRisk,
+        FactCreditRisk[pd] * FactCreditRisk[ead] * FactCreditRisk[lgd]
+    )
+
+Total EAD =
+    SUM(FactCreditRisk[ead])
+
+Average PD =
+    AVERAGEX(FactCreditRisk, FactCreditRisk[pd] * FactCreditRisk[ead])
+    / SUM(FactCreditRisk[ead])
+
+Weighted Avg LGD =
+    DIVIDE(
+        SUMX(FactCreditRisk, FactCreditRisk[lgd] * FactCreditRisk[ead]),
+        SUM(FactCreditRisk[ead]),
+        0
+    )
+
+NPL Ratio =
+    DIVIDE(
+        CALCULATE(
+            SUM(FactCreditRisk[ead]),
+            FactCreditRisk[pd] >= 0.2
+        ),
+        SUM(FactCreditRisk[ead]),
+        0
+    )
+
+EL as % of EAD =
+    DIVIDE([Expected Loss], [Total EAD], 0)
+
+Coverage Ratio =
+    DIVIDE(
+        SUM(FactCreditRisk[collateral_value]),
+        SUM(FactCreditRisk[ead]),
+        0
+    )
+
+Unexpected Loss =
+    [Total EAD]
+    * SQRT([Average PD] * (1 - [Average PD]))
+    * [Weighted Avg LGD]
+    * 3
+
+Risk Tier =
+    VAR AvgPD = [Average PD]
+    RETURN
+        SWITCH(
+            TRUE(),
+            AvgPD < 0.01, "Green",
+            AvgPD < 0.05, "Amber",
+            AvgPD < 0.15, "Red",
+            "Critical"
+        )
+
+
+# ── TABLE: FactFPA ───────────────────────────────────────────────────────────
+
+Budget Amount =
+    SUM(FactFPA[budget])
+
+Actual Amount =
+    SUM(FactFPA[actual])
+
+Forecast Amount =
+    SUM(FactFPA[forecast])
+
+Variance $ =
+    [Actual Amount] - [Budget Amount]
+
+Variance % =
+    DIVIDE([Variance $], [Budget Amount], 0)
+
+Forecast Accuracy % =
+    1 - DIVIDE(
+        ABS([Forecast Amount] - [Actual Amount]),
+        ABS([Actual Amount]),
+        0
+    )
+
+Budget Attainment % =
+    DIVIDE([Actual Amount], [Budget Amount], 0)
+
+Full Year Forecast =
+    [Actual Amount]
+    + CALCULATE(
+        [Forecast Amount],
+        DimDate[Month] > MONTH(TODAY())
+    )
+
+Variance Status =
+    VAR VarPct = [Variance %]
+    RETURN
+        SWITCH(
+            TRUE(),
+            VarPct > 0.05,  "Over Budget",
+            VarPct < -0.05, "Favourable",
+            "On Track"
+        )
+
+
+# ── TABLE: FactTreasury ──────────────────────────────────────────────────────
+
+Total Cash =
+    SUM(FactTreasury[cash_balance])
+
+Net FX Exposure =
+    SUM(FactTreasury[fx_long]) - SUM(FactTreasury[fx_short])
+
+LCR % =
+    DIVIDE(
+        SUM(FactTreasury[hqla]),
+        SUM(FactTreasury[net_cash_outflows_30d]),
+        0
+    ) * 100
+
+NSFR % =
+    DIVIDE(
+        SUM(FactTreasury[asf]),
+        SUM(FactTreasury[rsf]),
+        0
+    ) * 100
+
+LCR Status =
+    IF([LCR %] >= 100, "Compliant", "Breach")
+
+Cash 7D Trend =
+    CALCULATE(
+        [Total Cash],
+        DATESINPERIOD(DimDate[Date], LASTDATE(DimDate[Date]), -7, DAY)
+    )
+
+
+# ── TABLE: FactESG ───────────────────────────────────────────────────────────
+
+ESG Composite Score =
+    AVERAGE(FactESG[e_score]) * 0.40
+    + AVERAGE(FactESG[s_score]) * 0.35
+    + AVERAGE(FactESG[g_score]) * 0.25
+
+Avg Carbon Intensity =
+    AVERAGE(FactESG[carbon_intensity])
+
+Carbon YoY Change % =
+    VAR PY =
+        CALCULATE(
+            AVERAGE(FactESG[carbon_intensity]),
+            SAMEPERIODLASTYEAR(DimDate[Date])
+        )
+    RETURN
+        DIVIDE(AVERAGE(FactESG[carbon_intensity]) - PY, PY, 0)
+
+ESG Rating Band =
+    VAR Score = [ESG Composite Score]
+    RETURN
+        SWITCH(
+            TRUE(),
+            Score >= 80, "AAA",
+            Score >= 70, "AA",
+            Score >= 60, "A",
+            Score >= 50, "BBB",
+            Score >= 40, "BB",
+            "B"
+        )
+
+Board Diversity % =
+    AVERAGE(FactESG[board_diversity_pct])
+
+
+# ── TABLE: DimEconomicIndicators ─────────────────────────────────────────────
+
+Avg GDP Growth =
+    AVERAGE(DimEconomicIndicators[gdp_growth])
+
+Avg Inflation =
+    AVERAGE(DimEconomicIndicators[inflation_rate])
+
+Avg Policy Rate =
+    AVERAGE(DimEconomicIndicators[policy_rate])
+
+Real Policy Rate =
+    AVERAGE(DimEconomicIndicators[policy_rate])
+    - AVERAGE(DimEconomicIndicators[inflation_rate])
+
+Avg VIX =
+    AVERAGE(DimEconomicIndicators[vix])
+
+Avg Unemployment =
+    AVERAGE(DimEconomicIndicators[unemployment_rate])

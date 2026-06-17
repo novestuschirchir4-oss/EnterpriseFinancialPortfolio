@@ -1,0 +1,62 @@
+# Enterprise Financial Portfolio — .gitignore
+# ============================================================================
+
+# Power BI temporary files
+*.pbix.lock
+~*.pbix
+~*.pbit
+
+# Excel temporary files
+~$*.xlsx
+*.xlk
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv
+venv/
+ENV/
+*.ipynb_checkpoints
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# SQL temp files
+*.bak
+*.tmp
+
+# Node (if using any JS tooling)
+node_modules/
+npm-debug.log*
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Sensitive / credentials
+.env
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# Large binary files — store with Git LFS instead
+# *.pbix
+# *.xlsx
