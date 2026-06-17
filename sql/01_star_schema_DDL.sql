@@ -1,7 +1,6 @@
 -- ============================================================================
 -- ENTERPRISE FINANCIAL DATA WAREHOUSE
 -- Star Schema DDL — PostgreSQL / SQL Server / Snowflake compatible
--- Author  : Phil Kibet | Biostatistician & Financial Data Analyst
 -- Project : Enterprise Financial Intelligence Suite
 -- Source  : SEC EDGAR · NSE · LSE · NYSE · NASDAQ · FRED · World Bank · IMF
 -- ============================================================================
